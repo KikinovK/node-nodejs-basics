@@ -4,9 +4,9 @@ import { getDirNameFromUrl } from '../utils/getDirNameFromUrl.js';
 
 const copyRecursive = async (source, target) => {
     const files = await fs.readdir(source);
-    files.forEach(async (file) => {
-        const sourceFile = path.join(source, file);
-        const targetFile = path.join(target, file);
+    for (const file of files) {
+        const sourceFile = path.resolve(source, file);
+        const targetFile = path.resolve(target, file);
         const stats = await fs.lstat(sourceFile);
         if (stats.isDirectory()) {
             await fs.mkdir(targetFile);
@@ -14,7 +14,7 @@ const copyRecursive = async (source, target) => {
         } else {
             await fs.copyFile(sourceFile, targetFile);
         }
-    });
+    };
 };
 
 const copy = async () => {
@@ -28,11 +28,10 @@ const copy = async () => {
 
     try {
         await fs.mkdir(targetPath);
-        copyRecursive(sourcePath, targetPath);
-    } catch {
-        throw Error(errorMessage);
+        await copyRecursive(sourcePath, targetPath);
+    } catch(error) {
+        throw new Error(`${errorMessage}: ${error.message}`);
     }
-
 
 };
 
