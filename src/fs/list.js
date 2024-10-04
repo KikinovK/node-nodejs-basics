@@ -7,7 +7,7 @@ const list = async () => {
     const errorMessage = 'FS operation failed';
 
     const currentDirPath = getDirNameFromUrl(import.meta.url);
-    const pathName = path.join(currentDirPath, sourceDir);
+    const pathName = path.resolve(currentDirPath, sourceDir);
 
     try {
         const files = await fs.readdir(pathName);
@@ -16,8 +16,8 @@ const list = async () => {
         files.forEach(file => {
             console.log(file);
         });
-    } catch {
-        throw Error(errorMessage);
+    } catch(error) {
+        throw new Error(`${errorMessage}: ${error.message}`);
     }
 };
 

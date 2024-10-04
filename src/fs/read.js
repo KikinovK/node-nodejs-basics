@@ -8,15 +8,15 @@ const read = async () => {
     const errorMessage = 'FS operation failed';
 
     const currentDirPath = getDirNameFromUrl(import.meta.url);
-    const pathName = path.join(currentDirPath, sourceDir, fileName);
+    const pathName = path.resolve(currentDirPath, sourceDir, fileName);
 
     try {
         const fileContent = await fs.readFile(pathName, 'utf-8');
 
         console.log(`Content of ${pathName}:`);
         console.log(fileContent);
-    } catch {
-        throw Error(errorMessage);
+    } catch(error) {
+        throw new Error(`${errorMessage}: ${error.message}`);
     }
 };
 
