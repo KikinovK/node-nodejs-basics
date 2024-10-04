@@ -3,7 +3,7 @@ const parseEnv = () => {
 
     for (const [key, value] of Object.entries(environmentVariables)) {
         if (key.startsWith('RSS_')) {
-            console.log(`RSS_${key}=${value}`);
+            console.log(`${key}=${value}`);
         }
     }
 };
