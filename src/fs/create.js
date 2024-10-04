@@ -9,12 +9,12 @@ const create = async () => {
     const errorMessage = 'FS operation failed';
 
     const currentDirPath = getDirNameFromUrl(import.meta.url);
-    const pathName = path.join(currentDirPath, fileName);
+    const pathName = path.resolve(currentDirPath, fileName);
 
     try {
-        fs.writeFile(pathName, content);
-    } catch {
-        throw new Error(errorMessage);
+        await fs.writeFile(pathName, content, { flag: 'wx' });
+    } catch(error) {
+        throw new Error(`${errorMessage}: ${error.message}`);
     }
 
 };
