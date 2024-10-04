@@ -8,12 +8,12 @@ const remove = async () => {
     const errorMessage = 'FS operation failed';
 
     const currentDirPath = getDirNameFromUrl(import.meta.url);
-    const pathName = path.join(currentDirPath, sourceDir, fileName);
+    const pathName = path.resolve(currentDirPath, sourceDir, fileName);
 
     try {
         await fs.unlink(pathName);
-    } catch {
-        throw Error(errorMessage);
+    } catch(error) {
+        throw new Error(`${errorMessage}: ${error.message}`);
     }
 }
 
