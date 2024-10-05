@@ -7,7 +7,7 @@ const read = async () => {
     const fileName = 'fileToRead.txt';
 
     const currentDirPath = getDirNameFromUrl(import.meta.url);
-    const filePath = path.join(currentDirPath, sourceDir, fileName);
+    const filePath = path.resolve(currentDirPath, sourceDir, fileName);
 
     const fileStream = fs.createReadStream(filePath, { encoding: 'utf-8' });
     const consoleStream = process.stdout;

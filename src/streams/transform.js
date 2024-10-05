@@ -3,7 +3,7 @@ import { Transform } from 'stream';
 const reverseText = new Transform({
     transform(chunk, encoding, callback) {
         const reversedChunk = chunk.toString().split('').reverse().join('');
-        this.push(`${reversedChunk}\n`);
+        this.push(`${reversedChunk}\n\n`);
         callback();
     }
 });
@@ -13,7 +13,7 @@ const transform = async () => {
         .pipe(reverseText)
         .pipe(process.stdout);
 
-    console.log('Enter your details (press Ctrl + D to complete entry):');
+    console.log('Enter your details (press Ctrl + C to complete entry):');
 };
 
 await transform();
